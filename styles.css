@@ -1,0 +1,592 @@
+/* Medical Lab Report Generator Styles */
+
+/* General Styles */
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Poppins', sans-serif;
+}
+
+main {
+    flex: 1;
+}
+
+.site-header, .site-footer {
+    background-color: var(--bs-dark);
+    padding: 1.5rem 0;
+    color: white;
+}
+
+.site-header {
+    margin-bottom: 2rem;
+}
+
+.site-footer {
+    margin-top: 2rem;
+}
+
+/* Print styles - completely new approach for single page printing */
+@media print {
+    /* Hide everything except the report itself */
+    .print-hide, header, footer, .col-lg-5, .card-header, #print-report, 
+    .site-header, .site-footer, .navbar, .nav, .lab-header, .report-title {
+        display: none !important;
+    }
+    
+    /* Make the report take up the full page */
+    #report-preview {
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    
+    .col-lg-7 {
+        width: 100% !important;
+    }
+    
+    /* Remove any card styling for printing */
+    .card {
+        border: none !important;
+        box-shadow: none !important;
+    }
+    
+    .card-body {
+        padding: 0 !important;
+    }
+    
+    /* Ensure clean printing background with proper paper size for A4 letterhead */
+    @page {
+        size: A4 portrait;
+        margin: 1.5cm 1cm;
+    }
+    
+    body {
+        background-color: white !important;
+        color: black !important;
+        font-family: 'Arial', sans-serif !important;
+        font-size: 10pt !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    
+    /* Remove all non-essential elements */
+    .report-header, .report-footer, .print-header, .lab-header {
+        display: none !important;
+    }
+    
+    /* Format the print report container for single page with letterhead margins */
+    .report-container {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 auto !important; /* Center the report */
+        padding: 1cm 0 0 0 !important; /* Add top padding for letterhead */
+        background-color: white !important;
+        color: #333 !important;
+        font-family: 'Arial', sans-serif !important;
+        position: relative !important; 
+        box-sizing: border-box !important;
+    }
+    
+    /* Keep important section spacing but compact for single page */
+    .print-section {
+        page-break-inside: avoid;
+        margin-bottom: 0.7cm !important;
+    }
+    
+    /* Compact patient info section for horizontal layout - centered for letterhead */
+    .patient-info-row {
+        display: flex !important;
+        flex-direction: row !important;
+        justify-content: center !important;
+        margin: 0 auto 0.5cm auto !important;
+        max-width: 17cm !important; /* Standard A4 width minus margins */
+    }
+    
+    .patient-info-card {
+        width: 48% !important;
+        padding: 0.4cm !important;
+        margin: 0 0.25cm !important;
+        box-shadow: none !important;
+        border: 1px solid #ccc !important;
+        border-left: 3px solid #3498db !important;
+        background-color: rgba(255, 255, 255, 0.95) !important;
+    }
+    
+    .info-title {
+        font-size: 11pt !important;
+        margin-bottom: 0.2cm !important;
+    }
+    
+    .info-item {
+        margin-bottom: 0.1cm !important;
+        font-size: 10pt !important;
+    }
+    
+    /* Compact table for test results */
+    .results-table {
+        border-collapse: collapse !important;
+        width: 90% !important;
+        max-width: 17cm !important;
+        margin: 0 auto 0.5cm auto !important;
+        font-size: 9pt !important;
+    }
+    
+    .results-table th, .results-table td {
+        border: 1px solid #333 !important;
+        padding: 4px 6px !important;
+        text-align: left !important;
+    }
+    
+    .results-table th {
+        background-color: #f0f0f0 !important;
+        color: black !important;
+        font-size: 9pt !important;
+    }
+    
+    /* Center the test results section title */
+    .print-section .info-title {
+        text-align: center !important;
+        justify-content: center !important;
+        margin-bottom: 0.3cm !important;
+    }
+    
+    /* Make recommendations more compact and centered */
+    .recommendations-card {
+        padding: 0.3cm !important;
+        margin: 0 auto 0.5cm auto !important;
+        max-width: 17cm !important;
+        box-shadow: none !important;
+        border: 1px solid #ccc !important;
+        border-left: 3px solid #3498db !important;
+    }
+    
+    .recommendations-title {
+        font-size: 11pt !important;
+        margin-bottom: 0.2cm !important;
+    }
+    
+    .recommendations-list {
+        margin-top: 0.1cm !important;
+        padding-left: 1cm !important;
+    }
+    
+    .recommendations-list li {
+        margin-bottom: 0.1cm !important;
+        font-size: 9pt !important;
+    }
+    
+    /* Optimize signature section for bottom of page - centered for letterhead */
+    .signature-section {
+        margin: 1cm auto 0 auto !important;
+        display: flex !important;
+        justify-content: space-around !important;
+        max-width: 15cm !important;
+        width: 90% !important;
+    }
+    
+    .signature-block {
+        width: 40% !important;
+        text-align: center !important;
+    }
+    
+    .signature-line {
+        margin-bottom: 0.1cm !important;
+    }
+    
+    .signature-title {
+        font-size: 9pt !important;
+    }
+    
+    /* Ensure color for status indicators */
+    .normal-result, .status-normal {
+        color: #1e7e34 !important;
+    }
+    
+    .abnormal-result, .status-abnormal {
+        color: #a71d2a !important;
+    }
+    
+    /* Remove status indicator background & adjust padding */
+    .status-indicator {
+        background: none !important;
+        padding: 0 !important;
+        font-size: 9pt !important;
+    }
+}
+
+/* Modern Interface Styling */
+.card {
+    border: none;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 2rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.18);
+}
+
+.card-header {
+    padding: 1.25rem;
+    border-bottom: none;
+}
+
+.form-label {
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+.form-control, .form-select {
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    border: 1px solid var(--bs-border-color);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: var(--bs-primary);
+    box-shadow: 0 0 0 0.25rem rgba(var(--bs-primary-rgb), 0.25);
+}
+
+.input-group-text {
+    background-color: var(--bs-gray-800);
+    color: white;
+    border: none;
+    border-radius: 8px 0 0 8px;
+}
+
+/* Report Styling */
+.normal-result {
+    color: #198754 !important; /* Enhanced green */
+    font-weight: 600;
+}
+
+.abnormal-result {
+    color: #dc3545 !important;
+    font-weight: 600;
+}
+
+.test-value {
+    font-weight: 600;
+}
+
+/* Modern Lab Report Styling */
+.report-container {
+    font-family: 'Raleway', sans-serif;
+    background-color: white;
+    color: #333;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.report-title {
+    color: #2c3e50;
+    font-weight: 700;
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 1rem;
+}
+
+.patient-info-card {
+    border-left: 5px solid #3498db;
+    background-color: #f8fafc;
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.info-title {
+    color: #2c3e50;
+    font-weight: 600;
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+}
+
+.info-title i {
+    color: #3498db;
+    margin-right: 0.5rem;
+}
+
+.info-item {
+    margin-bottom: 0.75rem;
+    display: flex;
+}
+
+.info-label {
+    font-weight: 600;
+    color: #555;
+    width: 120px;
+    flex-shrink: 0;
+}
+
+.info-value {
+    color: #333;
+}
+
+.results-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1.5rem;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.results-table thead {
+    background: linear-gradient(135deg, #3498db, #2c3e50);
+    color: white;
+}
+
+.results-table th {
+    font-weight: 600;
+    padding: 12px 15px;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.05em;
+    border: none;
+}
+
+.results-table td {
+    padding: 12px 15px;
+    border-top: 1px solid #e9ecef;
+    vertical-align: middle;
+}
+
+.results-table tbody tr:nth-of-type(odd) {
+    background-color: #f8f9fa;
+}
+
+.results-table tbody tr:hover {
+    background-color: #f1f5f9;
+}
+
+.status-indicator {
+    display: inline-flex;
+    align-items: center;
+    font-weight: 600;
+    padding: 5px 10px;
+    border-radius: 20px;
+}
+
+.status-normal {
+    background-color: rgba(25, 135, 84, 0.1);
+    color: #198754;
+}
+
+.status-abnormal {
+    background-color: rgba(220, 53, 69, 0.1);
+    color: #dc3545;
+}
+
+.recommendations-card {
+    background-color: #f0f9ff;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    border-left: 5px solid #3498db;
+}
+
+.recommendations-title {
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+}
+
+.recommendations-title i {
+    color: #3498db;
+    margin-right: 0.5rem;
+}
+
+.recommendations-list {
+    margin: 0;
+    padding-left: 1.5rem;
+}
+
+.recommendations-list li {
+    margin-bottom: 0.5rem;
+    color: #444;
+}
+
+.signature-section {
+    margin-top: 3rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+.signature-block {
+    text-align: center;
+    width: 200px;
+}
+
+.signature-line {
+    width: 100%;
+    border-bottom: 1px solid #333;
+    margin-bottom: 0.5rem;
+}
+
+.signature-title {
+    font-weight: 600;
+    color: #555;
+}
+
+/* Mobile-specific adjustments */
+@media (max-width: 768px) {
+    /* Adjust form controls for touch */
+    .form-control, .form-select, .btn {
+        font-size: 1rem;
+        padding: 0.75rem;
+        margin-bottom: 1rem;
+        height: auto;
+    }
+    
+    /* Make cards fill width */
+    .card {
+        width: 100%;
+        margin-left: 0;
+        margin-right: 0;
+        border-radius: 8px;
+    }
+    
+    /* Adjust table for smaller screens */
+    .results-table {
+        font-size: 0.85rem;
+        width: 100%;
+        overflow-x: auto;
+        display: block;
+    }
+    
+    .results-table th, .results-table td {
+        padding: 8px;
+        font-size: 0.8rem;
+    }
+    
+    /* Stack info items for better readability */
+    .info-item {
+        flex-direction: column;
+    }
+    
+    .info-label {
+        width: 100%;
+        margin-bottom: 0.25rem;
+    }
+    
+    /* Full-width buttons that are easily tappable */
+    .btn-primary, .btn-secondary, .btn-info {
+        width: 100%;
+        margin-bottom: 0.75rem;
+        padding: 0.75rem;
+        font-size: 1rem;
+    }
+    
+    /* Adjust patient info for mobile */
+    .patient-info-row {
+        flex-direction: column;
+    }
+    
+    .patient-info-card {
+        width: 100%;
+        margin: 0 0 1rem 0;
+    }
+    
+    /* Make section titles more prominent */
+    .info-title, .recommendations-title {
+        font-size: 1.1rem;
+        text-align: center;
+    }
+    
+    /* Adjust print modal for mobile */
+    .modal-dialog {
+        margin: 0.5rem;
+        max-width: 100%;
+    }
+    
+    /* Optimize signature section for mobile */
+    .signature-section {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .signature-block {
+        width: 100%;
+        margin-bottom: 1.5rem;
+    }
+    
+    /* Make report container take full width */
+    .report-container {
+        padding: 1rem;
+        border-radius: 8px;
+    }
+    
+    /* Adjust header for mobile */
+    .site-header {
+        padding: 0.75rem 0;
+    }
+    
+    .site-header h1 {
+        font-size: 1.2rem;
+    }
+    
+    /* Condensed container padding */
+    .container {
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+    }
+    
+    /* Fixed bottom buttons for easy access */
+    .fixed-bottom-toolbar {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: var(--bs-dark);
+        padding: 0.5rem;
+        box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
+        z-index: 1000;
+        display: flex;
+        justify-content: space-around;
+    }
+    
+    .fixed-bottom-toolbar .btn {
+        margin-bottom: 0;
+        padding: 0.5rem;
+        width: auto;
+        flex: 1;
+        margin: 0 0.25rem;
+        font-size: 0.9rem;
+    }
+    
+    /* Add padding at bottom for fixed toolbar */
+    body {
+        padding-bottom: 4rem;
+    }
+    
+    /* Make form groups more compact */
+    .mb-3 {
+        margin-bottom: 0.5rem !important;
+    }
+    
+    /* Hide decorative elements on mobile */
+    .d-mobile-none {
+        display: none !important;
+    }
+    
+    /* Enhance touch targets */
+    input[type="radio"], input[type="checkbox"] {
+        transform: scale(1.5);
+        margin-right: 0.75rem;
+    }
+}
